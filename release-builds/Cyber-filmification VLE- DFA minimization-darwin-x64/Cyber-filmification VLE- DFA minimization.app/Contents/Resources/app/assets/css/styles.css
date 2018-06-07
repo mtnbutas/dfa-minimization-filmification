@@ -1,0 +1,106 @@
+html, body{
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+
+#canvas-container{
+	width: 100%;
+	height: calc(100% - 80px);
+	display: flex;
+	flex-wrap: wrap;
+	overflow: auto;
+	margin: 0;
+	padding: 50px;
+	align-items: center;
+	justify-content: center;
+}
+
+#canvas-container > div {
+	margin: 30px 30px;
+	padding: 0;
+	font-size: 17px;
+}
+
+#canvas-container canvas {
+	display: block;
+	margin: 5px 0 0 0;
+	padding: 0;
+	/*padding: 20px;*/
+
+	border: 2px solid #000;
+	-moz-box-shadow:    0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	-webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	box-shadow:         0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+	-moz-border-radius: 1%;
+	-webkit-border-radius: 1%;
+
+}
+
+#menu{
+	height: 80px;
+	max-height: 20%;
+	margin: 0;
+	bottom: 0;
+  	left: 0;
+  	position: fixed;
+  	width: 100%;
+  	-webkit-box-shadow: 0px -4px 3px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    0px -4px 3px rgba(50, 50, 50, 0.75);
+    box-shadow:         0px -4px 3px rgba(50, 50, 50, 0.75);
+}
+
+.col-sm-4{
+	height: 80px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.glyphicon {
+    font-size: 25px;
+}
+
+button{
+	padding: 4px 3px 4px 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+	background: transparent;
+	border: none;
+	outline: none;
+}
+
+button.disabled-btn{
+	cursor: default;
+	color: lightgray;
+}
+
+button:active:not(.disabled-btn){
+	border: 1px solid lightgray;
+    outline-style: double;
+    outline-color: black;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.active-btn{
+	background: lightblue;
+	border: 1px solid lightblue;
+    outline-style: double;
+    outline-color: black;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+.form-check-input{
+	width: 16px;
+	height: 16px;
+	margin: 0;
+}
+
+.form-check-label{
+	font-size: 17px;
+}

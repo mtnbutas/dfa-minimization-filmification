@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../bootstrap-3.3.7/dist/css/bootstrap.min.css">
+	<title>Edit Film</title>
+</head>
+<body style="padding-bottom: 25px">
+	<div class="container" role="form">	
+		<form>
+			<div class="tab" style="display: block;">
+				<center><h3>Deterministic Finite Automata Specifications</h3></center>
+				<div class="form-group has-success">
+					<label class="control-label" for="set-of-states">Set of States:</label>
+					<input type="text" name="set-of-states" id="set-of-states" class="form-control" placeholder="ex: A,B,C,D,E,F" required>
+					<span class="help-block" id="error1"></span>
+				</div>
+				<div class="form-group has-success">
+					<label class="control-label" for="alphabet">Alphabet (input symbols):</label>
+					<input type="text" name="alphabet" id="alphabet" class="form-control" placeholder="ex: 0,1" required>
+					<span class="help-block" id="error2"></span>
+				</div>
+				<div class="form-group has-success">
+					<label class="control-label" for="start-state">Starting State:</label>
+					<input type="text" name="start-state" id="start-state" class="form-control" placeholder="must be in the Set of States" required>
+					<span class="help-block" id="error3"></span>
+				</div>
+				<div class="form-group has-success">
+					<label class="control-label" for="final-states">Final States:</label>
+					<input type="text" name="final-states" id="final-states" class="form-control" placeholder="all must be in the Set of States" required>
+					<span class="help-block" id="error4"></span>
+				</div>
+				<button type="button" id="next-btn" class="btn" style="float: right">Next</button>
+			</div>
+			<div class="tab" style="display: none;">
+				<center><h3>Transitions</h3></center>
+				<table class="table table-bordered" id="transition-table">
+					<thead>
+						<tr>
+							<th>Current State</th>
+							<th>Input Symbol</th>
+							<th>Next State</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+				<button type="button" id="prev-btn" class="btn btn-primary" style="float: left">Previous</button>
+				<button type="button" id="update-film-btn" class="btn" style="float: right">Preview</button>
+				<!-- <div class="col-sm-12" style="padding: 10px 0">
+					<button type="button" id="update-save-film-btn" class="btn" style="float: right">Update and Save Changes</button>
+				</div> -->
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/chance.min.js"></script>
+	<script type="text/javascript" src="../js/editFilmWindow.js"></script>
+</body>
+</html>
