@@ -37,7 +37,8 @@ app.on('ready', function() {
 		width: screenSize.width,
 		height: screenSize.height,
 		minWidth: 1100,
-		minHeight: 850
+		minHeight: 850,
+		icon: path.join(__dirname, 'assets/icons/png/icon.png')
 	});
 
 	mainWindow.once('ready-to-show', () => {
@@ -96,8 +97,6 @@ function createNewFilmWindow(){
 	newFilmWindow.on('close', function(e){
 		newFilmWindow.hide();
 		e.preventDefault();
-		Menu.setApplicationMenu(null);
-		mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
 		Menu.setApplicationMenu(mainMenu);
 	});
 }
@@ -121,9 +120,14 @@ ipcMain.on('film:specifications', function(e, new_film_specs){
 		if(new_film){
 			loaded_file = "";
 			unsaved_changes = true;
-			mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
-			mainMenu.items[0].submenu.items[3].enabled = true;
-			Menu.setApplicationMenu(mainMenu);
+			// mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
+			if(Menu.getApplicationMenu() == null){
+				mainMenu.items[0].submenu.items[3].enabled = true;
+			}
+			else{
+				Menu.getApplicationMenu().items[0].submenu.items[3].enabled = true;
+			}
+			
 		}
 		
 		newFilmWindow.close();
@@ -157,8 +161,6 @@ function showEditFilmWindow(){
 	// Garbage collection handle
 	editFilmWindow.on('close', function(e){
 		editFilmWindow.hide();
-		Menu.setApplicationMenu(null);
-		mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
 		Menu.setApplicationMenu(mainMenu);
 	});
 }
@@ -178,10 +180,12 @@ ipcMain.on('film:show-specifications', function(e, film_specs){
 ipcMain.on('film:update-only-specifications', function(e, update_only_film_specs){
 	if(new_film || !(equal_arr(og_set_of_states, update_only_film_specs[0]) && equal_arr(og_alphabet, update_only_film_specs[1]) && og_start_state == update_only_film_specs[2] && equal_arr(og_final_states, update_only_film_specs[3]) && equal_arr(og_transitions, update_only_film_specs[4]))){
 		unsaved_changes = true;
-		Menu.setApplicationMenu(null);
-		mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
-		mainMenu.items[0].submenu.items[3].enabled = true;
-		Menu.setApplicationMenu(mainMenu);
+		if(Menu.getApplicationMenu() == null){
+			mainMenu.items[0].submenu.items[3].enabled = true;
+		}
+		else{
+			Menu.getApplicationMenu().items[0].submenu.items[3].enabled = true;
+		}
 		
 		new_set_of_states = update_only_film_specs[0];
 		new_alphabet = update_only_film_specs[1];
@@ -190,11 +194,13 @@ ipcMain.on('film:update-only-specifications', function(e, update_only_film_specs
 		new_transitions = update_only_film_specs[4];
 	}
 	else{
-		unsaved_changes = false;
-		Menu.setApplicationMenu(null);
-		mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
-		mainMenu.items[0].submenu.items[3].enabled = false;
-		Menu.setApplicationMenu(mainMenu);		
+		unsaved_changes = false;	
+		if(Menu.getApplicationMenu() == null){
+			mainMenu.items[0].submenu.items[3].enabled = false;
+		}
+		else{
+			Menu.getApplicationMenu().items[0].submenu.items[3].enabled = false;
+		}
 	}
 	
 	mainWindow.webContents.send('film:specifications', update_only_film_specs);
@@ -252,7 +258,6 @@ function show_unsaved_changes_dialog(){
 	customDialog.on('close', function(e){
 		customDialog.hide();
 		e.preventDefault();
-		// Menu.setApplicationMenu(null);
 		Menu.setApplicationMenu(mainMenu);
 		
 	});
@@ -284,11 +289,12 @@ function load_flm_dialog(prev_unsaved_changes_val){
 					new_film = false;
 					loaded_file = open_file;
 					unsaved_changes = false;
-					Menu.setApplicationMenu(null);
-					mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
-					mainMenu.items[0].submenu.items[3].enabled = false;
-					Menu.setApplicationMenu(mainMenu);
-					
+					if(Menu.getApplicationMenu() == null){
+						mainMenu.items[0].submenu.items[3].enabled = false;
+					}
+					else{
+						Menu.getApplicationMenu().items[0].submenu.items[3].enabled = false;
+					}
 
 					mainWindow.loadURL(url.format({
 						pathname: path.join(__dirname, 'cyber-film.html'),
@@ -403,11 +409,13 @@ function create_new_file(){
 
 		    	new_film = false;
 		    	unsaved_changes = false;
-		    	Menu.setApplicationMenu(null);
-		    	mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
-				mainMenu.items[0].submenu.items[3].enabled = false;
-				Menu.setApplicationMenu(mainMenu);
 
+				if(Menu.getApplicationMenu() == null){
+					mainMenu.items[0].submenu.items[3].enabled = false;
+				}
+				else{
+					Menu.getApplicationMenu().items[0].submenu.items[3].enabled = false;
+				}
 		   
 		 		if(selectedProcess == 'load'){
 					selectedProcess = "";
@@ -443,10 +451,13 @@ function write_changes_to_file(){
 		else{
 			dialog.showMessageBox(mainWindow, { title: "Successfully updated", message: "The film has been updated", buttons: ["OK"] });
 			unsaved_changes = false;
-			Menu.setApplicationMenu(null);
-			mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
-			mainMenu.items[0].submenu.items[3].enabled = false;
-			Menu.setApplicationMenu(mainMenu);
+			
+			if(Menu.getApplicationMenu() == null){
+				mainMenu.items[0].submenu.items[3].enabled = false;
+			}
+			else{
+				Menu.getApplicationMenu().items[0].submenu.items[3].enabled = false;
+			}
 		}
 	});
 }
@@ -455,10 +466,13 @@ function open_sample_film(){
 	loaded_file = "";
 	new_film = false;
 	unsaved_changes = false;
-	Menu.setApplicationMenu(null);
-	mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
-	mainMenu.items[0].submenu.items[3].enabled = false;
-	Menu.setApplicationMenu(mainMenu);
+	
+	if(Menu.getApplicationMenu() == null){
+		mainMenu.items[0].submenu.items[3].enabled = false;
+	}
+	else{
+		Menu.getApplicationMenu().items[0].submenu.items[3].enabled = false;
+	}
 	
 	// Load html into window
 	mainWindow.loadURL(url.format({
@@ -551,10 +565,14 @@ const mainMenuTemplate = [
 					}
 					else{
 						unsaved_changes = false;
-						Menu.setApplicationMenu(null);
-						mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
-						mainMenu.items[0].submenu.items[3].enabled = false;
-						Menu.setApplicationMenu(mainMenu);
+						
+						if(Menu.getApplicationMenu() == null){
+							mainMenu.items[0].submenu.items[3].enabled = false;
+						}
+						else{
+							Menu.getApplicationMenu().items[0].submenu.items[3].enabled = false;
+						}
+
 						new_film = true;
 						
 						createNewFilmWindow();
@@ -578,10 +596,14 @@ const mainMenuTemplate = [
 					}
 					else{
 						unsaved_changes = false;
-						Menu.setApplicationMenu(null);
-						mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
-						mainMenu.items[0].submenu.items[3].enabled = false;
-						Menu.setApplicationMenu(mainMenu);
+						
+						if(Menu.getApplicationMenu() == null){
+							mainMenu.items[0].submenu.items[3].enabled = false;
+						}
+						else{
+							Menu.getApplicationMenu().items[0].submenu.items[3].enabled = false;
+						}
+
 						open_sample_film();
 					}
 				}
